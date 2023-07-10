@@ -1,43 +1,27 @@
-const sliderItems = document.querySelectorAll('.slider__item')
+const sliderItems = Array.from(document.querySelectorAll('.slider__item'))
 
 const slider = document.querySelectorAll('.slider__arrow')
 
-console.log(slider)
-
-let count = 0
-
-console.log(sliderItems.length)
-
-
+let currentImg = (element) => element.classList.contains('slider__item_active');
+let currentImgInd = sliderItems.findIndex(currentImg);
 
 slider.forEach(btn  => {
     btn.onclick = () => {
+        sliderItems[currentImgInd].classList.remove('slider__item_active');
         if (Array.from(btn.classList).includes('slider__arrow_prev')) {
-            if (count === 0) {
-                count = 5
-            };
-            count--;
-            console.log(count);
-            changeImg(count);
+            changeImg('prev');
         } else {
-            if (count === 4) {
-                count = -1
-            };
-            count++;
-            console.log(count);
-            changeImg(count);
+            changeImg('next');
             }
         }
-   
     }
-
 ) 
 
-function changeImg (count) {
-    let currentImg = Array.from(document.getElementsByClassName('slider__item_active'))
-    currentImg.forEach(img => {
-        img.classList.remove('slider__item_active')
-        }
-    );
-    sliderItems[count].classList.add('slider__item_active');
+function changeImg (direction) {
+    if (direction === 'next') {
+        sliderItems.push(sliderItems.shift());
+      } else if (direction === 'prev') {
+        sliderItems.unshift(sliderItems.pop());
+      }
+    sliderItems[0].classList.add('slider__item_active');
 }
