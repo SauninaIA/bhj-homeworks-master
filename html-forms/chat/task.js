@@ -16,15 +16,17 @@ document.addEventListener('click', () => chatWidget.classList.add('chat-widget_a
 
 input.addEventListener('keydown', (event) => {
 
-    if (event.code === "Enter" && input.value != '') {
+    if (event.code === "Enter" && input.value.trim() != '') {
         const i = Math.floor(Math.random() * answers.length);
+        const hours = ("0" + new Date().getHours()).slice(-2);
+        const minutes = ("0" + new Date().getMinutes()).slice(-2);
         chatMessages.innerHTML += `
 			<div class="message message_client">
-				<div class="message__time">${new Date().getHours()}:${new Date().getMinutes()}</div>
+                <div class="message__time">${hours}:${minutes}</div>
 				<div class="message__text">${input.value}</div>
 			</div>  
 			<div class="message">
-				<div class="message__time">${new Date().getHours()}:${new Date().getMinutes()}</div>
+                <div class="message__time">${hours}:${minutes}</div>
 				<div class="message__text">${answers[i]}</div>
 			</div>`;
         input.value = '';
